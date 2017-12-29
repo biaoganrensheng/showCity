@@ -1,0 +1,29 @@
+[{
+  "text": "浙江省",
+  "nodes": [
+    {
+      "text": "玉环市",
+      "icon": "glyphicon glyphicon-map-marker",
+      "suoshucity": "浙江省",
+      "nodes":[
+        {
+          "text":"玉环市的下属镇1",
+          "icon":"glyphicon glyphicon-map-marker",
+          "suoshucity": "浙江省玉环市"
+        }
+      ]
+    },
+    {
+      "text": "台州市",
+      "icon": "glyphicon glyphicon-map-marker",
+      "suoshucity": "浙江省",
+      "nodes":[
+        {
+          "text":"台州市的下属镇1",
+          "icon":"glyphicon glyphicon-map-marker",
+          "suoshucity": "浙江省台州市"
+        }
+      ]
+    }
+  ]
+}]

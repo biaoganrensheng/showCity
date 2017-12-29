@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>滩涂展示</title>
+    <meta name="keywords" content="艋顺,艋顺科技，艋顺科技公司">
+    <meta name="description" content="艋顺,艋顺科技，艋顺科技公司">
+    <link rel="shortcut icon" href="images/logo.ico" type="images/x-icon"/>
+    <link rel="icon" href="images/logo.ico" type="images/x-icon"/>
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="easyForm/easyform.css">
+    <link rel="stylesheet" href="radioCheckbox/labelauty.css">
+    <link rel="stylesheet" href="selectPlugin/bootstrap-select.min.css">
+    <style>
+        .form-inline {
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-right: 8px;
+        }
+
+        .btn.find, .btn.set {
+            margin-top: 6px;
+            margin-left: 10px;
+        }
+
+        .ding_control {
+            background: url(images/biao_xuan.png) no-repeat center;
+            position: relative;
+        }
+
+        .ding_control:hover div {
+            display: block;
+        }
+
+        .ding_control div {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 1000px;
+            min-width: 1000px;
+            z-index: 899;
+            height: 100%;
+            display: none;
+        }
+
+        .ding_control div p {
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            display: table;
+        }
+
+        .ding_control div a {
+            font-size: 16px;
+            padding: 0 14px;
+            color: #fff;
+            background: #4E6CA3;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .ding_control div a:hover {
+            color: #27C24C;
+        }
+
+        .user_div {
+            margin-top: 4px;
+        }
+
+        .user_div > div {
+            margin-bottom: 1em;
+        }
+
+        .user_select {
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #cfdadd;
+            box-shadow: none;
+            width: 60%;
+            height: 30px;
+        }
+        .showDeatailBox{
+            position: relative;
+            z-index: 9;
+        }
+        .showDeatailTab{
+            position: absolute;
+            width: 100%;
+            background: #fff;
+            right:-120%;
+            top: 0;
+             min-height: 500px; 
+            opacity: 0;
+            z-index:900;
+            box-shadow: 0 0 0 1px #e7eaec;
+
+        }
+        .panelAuto{
+            overflow-y: auto;
+        }
+        #showView{
+            background: #fff;
+        }
+        /* settings */
+        .setting-icon:hover{
+            background:#3498DB;
+            width: 130px;
+            color: #fff;
+        }
+        .setting-icon:hover i{
+             transform: translateX(100px);
+        }
+        .setting-icon i{
+            transition: all .8s ease-in-out;
+            -webkit-transition: all .8s ease-in-out;
+            -moz-transition: all .8s ease-in-out;
+            transition: all .8s ease-in-out;
+        }
+        .setting-icon{
+            position: absolute;
+            right: 0;
+            color: #fff;
+            background: #23b7e5;
+            padding: 7px 8px;
+            top:20px;
+            z-index: 1000;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.22);
+            font-family: open-sans-regular;
+            border-radius: 5px 0px 0px 5px !important;
+            line-height: 20px;
+            width: 34px;
+            white-space: nowrap;
+            -webkit-transition: width 300ms;
+            -moz-transition: width 300ms;
+            transition: width 300ms;
+        }
+       .removeBorder{
+            border-top: none;
+       }
+       #selCity{
+            display: none;
+       }
+        /*chajian*/
+        .search-if .inputTpl > div.row {
+            margin-bottom: 10px;
+        }
+
+        .search-if .inputTpl label {
+            padding-top: 6px;
+        }
+
+        .search-if .inputTpl .glyphicon {
+            right: 10px;
+            color: #23B7E5;
+        }
+        table.dataTable thead .sorting_asc {
+            background: none;
+        }
+        /* 测试 */
+        .text-div-box{
+            position: relative;
+        }
+        .text-div{
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #fff;
+            padding: 10px;
+        }
+        .text-div2{
+               position: absolute;
+               right: 0;
+               top: 0;
+               margin-left: 20px;
+               /* min-width:800px;  */
+              
+        }
+        /* 遮罩 */
+        .layout-zz{
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0,.4);
+            z-index:901;
+            
+            display: none;
+        }
+    </style>
+</head>
+<body  data-spy="scroll" data-target="#myScrollspy">
+<div class="wrapper wrapper-content animated fadeInRight" style="padding-top:20px;">
+    <div class="container-fluid">
+        <div class="row text-div-box" >
+            
+            <div class="text-div">
+                <div id="showView" class=""></div>
+                <button class="btn btn-block btn-success" id="selCity">选择</button>
+            </div>
+            <div class="text-div2">
+                <div class="panel panel-default showDeatailBox">
+                    <div class="panel-body">
+                        <ul id="myTab" class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tantu" data-toggle="tab">
+                                    滩涂长
+                                </a>
+                            </li>
+                            <li><a href="#tantuzhang" data-toggle="tab">滩涂</a></li>
+                        </ul>
+                        <div id="myTabContent1" class="tab-content">
+                            <div class="tab-pane fade in active" id="tantu" style="padding-top: 20px;">
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align: center;"><input type="checkbox"
+                                                                               class="userList_check_control"></th>
+                                        <th>序号</th>
+                                        <th>所属地区名称</th>
+                                        <th>用户名</th>
+                                        <th>联系电话</th>
+                                       <th>职务</th>
+                                       <th>上级滩涂长</th>
+                                       <th>用户类型</th>
+                                       <th>是否有效</th
+                                        <th style="border-left:none;background: #fff;"></th>
+                                    </tr>
+                                    </thead>
+                                    <!-- 滩涂长模板 -->
+                                    <tbody id="tmp_TTZ">
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="tantuzhang" style="padding-top: 20px;">
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead>
+                                    <tr>
+                                        <!--  <th style="text-align: center;"><input type="checkbox" class="userList_check_control"></th> -->
+                                        <th>序号</th>
+                                        <th>滩涂名称</th>
+                                        <th>滩涂别名</th>
+                                        <th>所属行政单位</th>
+                                        <th>滩涂长</th>
+                                        <th>滩涂编号</th>
+                                        <th>滩涂等级</th>
+                                        <th>滩涂起点</th>
+                                        <th>滩涂终点</th>
+                                        <th style="border-left:none;background: #fff;"></th>
+                                    </tr>
+                                    </thead>
+                                    <!-- 滩涂模板 -->
+                                    <tbody id="tmp_TT">
+                                   
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showDeatailTab">
+                        <div class="layout-zz">
+                            
+                        </div>
+                        <div class="row" style="padding-top: 10px;padding-left: 10px;">
+                            <div class="col-md-3">
+                                <div class="panel panel-info" style="border:none;" id="myTabContent2">
+                                     <!-- 展示标签页模板 -->
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <form action="" class="form-horizontal" id="form2">
+                                    <div class="row search-if">
+                                        <div class="panel-group col-md-7">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <!--data-target 要动态传值-->
+                                                    <h4 class="panel-title" data-toggle="collapse" data-target="#cxtj">
+                                                        <a role="button">
+                                                            类型1查询条件
+                                                        </a>
+                                                        <i class="glyphicon glyphicon-chevron-down pull-right"></i>
+                                                    </h4>
+                                                </div>
+                                                <!--cxtj 要动态传值 -->
+                                                <div id="cxtj" class="panel-collapse collapse in componentForm">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-10 col-md-offset-1">
+                                                                <!--此处用插件form 要给唯一的id-->
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">用&nbsp;户&nbsp;&nbsp;名:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="uid" type="text" class="form-control" id="uid"
+                                                                                       data-easyform="length:4 16;char-normal;real-time;"
+                                                                                       data-message="请输入4-6位字符用户名1"
+                                                                                       data-easytip="disappear:lost-focus;class:easy-blue;"
+                                                                                       ajax-message="用户名已存在!">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">密码:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="psw1" type="password" id="psw1"
+                                                                                       class="form-control"
+                                                                                       data-easyform="length:6;char-normal;real-time;"
+                                                                                       data-message="密码必须为6位英文、数字、下划线"
+                                                                                       data-easytip="disappear:lost-focus;class:easy-blue;">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">确认密码:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="psw2" type="password" class="form-control"
+                                                                                       id="psw2" data-easyform="length:6;equal:#psw1;real-time;"
+                                                                                       data-message="两次密码输入要一致"
+                                                                                       data-easytip="disappear:lost-focus;class:easy-blue;">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">邮箱:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="email" class="form-control" type="text" id="email"
+                                                                                       data-easyform="email;real-time;"
+                                                                                       data-message="Email格式要正确"
+                                                                                       data-easytip="disappear:lost-focus;class:easy-blue;"
+                                                                                       ajax-message="这个Email地址已经被注册过，请换一个吧!">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">昵称:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="nickname" type="text" class="form-control"
+                                                                                       id="nickname" data-easyform="length:2 16;real-time"
+                                                                                       data-message="昵称必须为2—16位"
+                                                                                       data-easytip="position:right;disappear:lost-focus;class:easy-blue;">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">性别:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="rdo">
+                                                                                    <input type="radio" name="rdo" class="rdolist" value="男">
+                                                                                    <label class="rdobox checked">
+                                                                                        <span class="check-image"></span>
+                                                                                        <span class="radiobox-content">男</span>
+                                                                                    </label>
+                                                                                    <input type="radio" name="rdo" class="rdolist"
+                                                                                           checked="checked" value="女">
+                                                                                    <label class="rdobox unchecked">
+                                                                                        <span class="check-image"></span>
+                                                                                        <span class="radiobox-content">女</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">喜欢的职业:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="fuxuan">
+                                                                                    <input type="checkbox" name="chk1" class="chklist"
+                                                                                           checked="checked" value="UI设计师">
+                                                                                    <label class="chkbox checked">
+                                                                                        <span class="check-image"></span>
+                                                                                        <span class="radiobox-content">UI设计师</span>
+                                                                                    </label>
+                                                                                    <input type="checkbox" name="chk2" class="chklist" value="软件工程师">
+                                                                                    <label class="chkbox checked">
+                                                                                        <span class="check-image"></span>
+                                                                                        <span class="radiobox-content">软件工程师</span>
+                                                                                    </label>
+                                                                                    <input type="checkbox" name="chk3" class="chklist" value="架构师">
+                                                                                    <label class="chkbox checked">
+                                                                                        <span class="check-image"></span>
+                                                                                        <span class="radiobox-content">架构师</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">喜欢的水果:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div>
+                                                                                    <label for="id_select"></label>
+                                                                                    <select id="id_select" name="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                                                                        <option>苹果</option>
+                                                                                        <option>梨</option>
+                                                                                        <option>香蕉</option>
+                                                                                        <option selected value="椰子">椰子</option>
+                                                                                        <option>樱桃</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row search-if">
+                                        <div class="panel-group col-md-7">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <!--data-target 要动态传值-->
+                                                    <h4 class="panel-title" data-toggle="collapse" data-target="#cxtj2">
+                                                        <a role="button">
+                                                            类型1查询条件
+                                                        </a>
+                                                        <i class="glyphicon glyphicon-chevron-down pull-right"></i>
+                                                    </h4>
+                                                </div>
+                                                <!--cxtj 要动态传值 -->
+                                                <div id="cxtj2" class="panel-collapse collapse in componentForm">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-10 col-md-offset-1">
+                                                                <!--此处用插件form 要给唯一的id-->
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">姓名:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="uid2" type="text" class="form-control" id="uid2"
+                                                                                       data-easyform="length:4 16;char-normal;real-time;"
+                                                                                       data-message="请输入4-6位字符用户名1"
+                                                                                       data-easytip="disappear:lost-focus;class:easy-blue;"
+                                                                                       ajax-message="用户名已存在!">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">密码:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="psw3" type="password" id="psw3"
+                                                                                       class="form-control"
+                                                                                       data-easyform="length:6;char-normal;real-time;"
+                                                                                       data-message="密码必须为6位英文、数字、下划线"
+                                                                                       data-easytip="disappear:lost-focus;class:easy-blue;">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">确认密码:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="psw4" type="password" class="form-control"
+                                                                                       id="psw4" data-easyform="length:6;equal:#psw1;real-time;"
+                                                                                       data-message="两次密码输入要一致"
+                                                                                       data-easytip="disappear:lost-focus;class:easy-blue;">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">身份证:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="emai2" class="form-control" type="text" id="emai2"
+                                                                                       data-easyform="email;real-time;"
+                                                                                       data-message="Email格式要正确"
+                                                                                       data-easytip="disappear:lost-focus;class:easy-blue;"
+                                                                                       ajax-message="这个Email地址已经被注册过，请换一个吧!">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group has-default has-feedback">
+                                                                    <div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label class="control-label">昵称:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input name="nickname2" type="text" class="form-control"
+                                                                                       id="nickname2" data-easyform="length:2 16;real-time"
+                                                                                       data-message="昵称必须为2—16位"
+                                                                                       data-easytip="position:right;disappear:lost-focus;class:easy-blue;">
+                                                                                <span class="glyphicon form-control-feedback"
+                                                                                      style="color:#23B7E5;"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="showHideIcon">
+                            <a href="javascript:;" class="setting-icon">
+                                <i class="glyphicon glyphicon-forward"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/bootstrap-treeview.min.js"></script>
+<!-- Data Tables插件的js -->
+<script src="js/plugins/dataTables/jquery.dataTables.min2.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!--chajian-->
+<script src="easyForm/easyform.js"></script>
+<script src="radioCheckbox/labelauty.js"></script>
+<script src="selectPlugin/bootstrap-select.min.js"></script>
+<script src="http://apps.bdimg.com/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
+<!-- 滩涂长模板 -->
+<script id="tanTuZhang-template" type="text/x-handlebars-template">
+    {{#each this}}
+         <tr>
+             <td style="text-align: center;">
+                 <input type="checkbox" name="checkbox_name[]">
+             </td>
+             <td>
+                 {{addOne @index}}
+             </td>
+             <td>
+                 {{parentNode}}
+             </td>
+             <td>{{userName}}</td>
+             <td>{{tel}}</td>
+             <td>{{post}}</td>
+             <td>{{preTanTuZ}}</td>
+             <td>{{userType}}</td>
+             <td>{{valid}}</td>
+             <td class="ding_control" style="width:20px;">
+                 <div>
+                     <p>
+                         <a href="javascript:;" class="look">查看</a>
+                          <a href="javascript:;" class="look">查看2</a>
+                          <a href="javascript:;" class="look">查看3</a>
+                     </p>
+                 </div>
+             </td>
+         </tr>
+    {{/each}}
+</script>
+<script id="tanTu-template" type="text/x-handlebars-template">
+    {{#each this}}
+         <tr>
+             <td>
+                {{addOne @index}}
+             </td>
+             <td>
+                {{tantuTitle}}
+             </td>
+             <td>{{tantuAntherName}}</td>
+             <td>{{suoshudanwei}}</td>
+             <td>{{tanTuZhang}}</td>
+             <td>{{tanTuCode}}</td>
+             <td>{{tantuGrade}}</td>
+             <td>{{tantuStarting}}</td>
+             <td>{{tantuEnding}}</td>
+             <td class="ding_control">
+                 <div>
+                     <p>
+                         <a href="javascript:;" class="look">查看</a>
+                     </p>
+                 </div>
+             </td>
+         </tr>
+    {{/each}}
+</script>
+<script id="tanTuNameOrTitle-template" type="text/x-handlebars-template">
+
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-7">
+                所属地区:{{city}}
+            </div>
+            <div class="col-md-5">
+                <button class="btn btn-md btn-warning" id="changeCity">切换地区</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+         <ul id="myTab" class="nav nav-tabs">
+             <li class="active">
+                 <a href="#ttzTabChange" data-toggle="tab">
+                   滩涂长
+                 </a>
+             </li>
+             <li>
+                 <a href="#ttTabChange" data-toggle="tab">滩涂</a>
+             </li>
+         </ul>
+         <div  class="tab-content">
+            <div class="tab-pane fade in active" id="ttzTabChange">
+                <div class="list-group panelAuto">
+                   {{#each arrTanTuZhang}}
+                    <a href="#" class="list-group-item {{addClass @index}}">
+                       {{this}}
+                    </a>
+                    {{/each}}
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="ttTabChange">
+                 <div class="list-group panelAuto">
+                   {{#each arrTanTu}}
+                    <a href="#" class="list-group-item {{addClass @index}}">
+                        {{this}}
+                    </a>
+                     {{/each}}
+                 </div>
+            </div>           
+         </div>
+    </div>
+</script>
+<script type="text/javascript">
+    (function (win, doc, $) {
+       //TODO:初始化 datatable
+        $(doc).ready(function () {
+            initTable= $('.dataTables-example').DataTable({
+                "aoColumnDefs": [
+                    {"bSortable": false, "aTargets": [0, 4]}
+                ]
+            });
+        });
+        //TODO:点击全选和全不选按钮的控制
+        $(".table").on("click","INPUT[name='checkbox_name[]']",function () {
+                    
+                   var flag=true;
+                   $("INPUT[name='checkbox_name[]']").each(function (i,v) {
+                       if(false == $(v).is(':checked')){
+                           $(".userList_check_control").prop("checked",false);
+                           flag=false;
+                       }
+                   })
+                   if(flag){
+                        $(".userList_check_control").prop("checked",true);
+                   }
+               })
+
+        $(".userList_check_control").bind("click", function () {
+               if($('.userList_check_control').is(':checked') == true){
+                   $("INPUT[name='checkbox_name[]']").each( function() {
+                       if(false == $(this).is(':checked')){
+                           $(this).prop("checked", true);
+                       }
+                   });
+               }
+               if($('.userList_check_control').is(':checked') == false){
+                   $("INPUT[name='checkbox_name[]']").each( function() {
+                       if(true == $(this).is(':checked')){
+                           $(this).prop("checked", false);
+                       }
+                   });
+               }
+           });
+        //TODO: 定义模板
+        function render(templateSel,htmlSel,data){
+            var source = $(templateSel).html();
+            var template = Handlebars.compile(source);
+            var context = data;
+            var html    = template(context);
+            $(htmlSel).html(html);
+        };
+        //TODO: handlebar的自定义属性
+         var handleHelperAddOne = Handlebars.registerHelper("addOne",function(index){
+                 return index+1;
+         });
+         var handleHelperAddClass = Handlebars.registerHelper("addClass",function(index){
+               if(index==0){
+                    return "active removeBorder" ;
+               }
+         });
+         //TODO: 模拟自定义数据
+        var defaultData = [
+
+            {
+                text: '浙江省',
+                tags: ['11'],
+                nodes: [
+                    {
+                        text: '玉环市',
+                        tags: ['7'],
+                        "suoshucity":'浙江省',
+                        nodes: [
+                            {
+                                text: '玉城街道哈',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                tags: ["街道"],
+                                "suoshucity":'浙江省玉环市',
+                                tantuzhang:[
+                                    {
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tcz_1",
+                                        "userName":"玉城-张三",
+                                        "tel":"15967114897",
+                                        "post":"副书记",
+                                        "preTanTuZ":"张三father",
+                                        "userType":"市级滩涂长Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, repudiandae aspernatur sapiente quam maiores magnam eius voluptate perspiciatis autem omnis esse consequuntur impedit, saepe rem quibusdam facilis veniam unde nemo.",
+                                        "valid":"有效"
+                                   },
+                                   {
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tcz_2",
+                                        "userName":"玉城-李四",
+                                        "tel":"15967114897",
+                                        "post":"书记",
+                                        "preTanTuZ":"李四father",
+                                        "userType":"市级滩涂长",
+                                        "valid":"无效"
+                                   },
+                                   {
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tcz_3",
+                                        "userName":"玉城-王五",
+                                        "tel":"15967114897",
+                                        "post":"书记3",
+                                        "preTanTuZ":"王五father",
+                                        "userType":"镇级滩涂长",
+                                        "valid":"无效"
+                                   },
+                                   {
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tcz_4",
+                                        "userName":"玉城-周六",
+                                        "tel":"15967114897",
+                                        "post":"书记4",
+                                        "preTanTuZ":"周六father",
+                                        "userType":"市级滩涂长",
+                                        "valid":"无效"
+                                   },
+                                   {
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tcz_5",
+                                        "userName":"玉城-刘七",
+                                        "tel":"15967114897",
+                                        "post":"书记5",
+                                        "preTanTuZ":"刘七father",
+                                        "userType":"市级滩涂长",
+                                        "valid":"无效"
+                                   }
+
+                               ],
+                               tantu:[
+                                    {
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tc_1",
+                                        "tantuTitle":"玉城太平塘1",
+                                        "tantuAntherName":"小宇宙",
+                                        "suoshudanwei":"仓兴村",
+                                        "tanTuZhang":"韩益辉",
+                                        "tanTuCode":"1",
+                                        "tantuGrade":"5",
+                                        "tantuStarting":"这里开始1",
+                                        "tantuEnding":"这里结束1"
+                                   },{
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tc_2",
+                                        "tantuTitle":"玉城太平塘2",
+                                        "tantuAntherName":"小宇宙",
+                                        "suoshudanwei":"仓兴村",
+                                        "tanTuZhang":"韩益辉",
+                                        "tanTuCode":"1",
+                                        "tantuGrade":"5",
+                                        "tantuStarting":"这里开始2",
+                                        "tantuEnding":"这里结束2"
+                                   },{
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tc_3",
+                                        "tantuTitle":"玉城太平塘3",
+                                        "tantuAntherName":"小宇宙",
+                                        "suoshudanwei":"仓兴村",
+                                        "tanTuZhang":"韩益辉",
+                                        "tanTuCode":"1",
+                                        "tantuGrade":"5",
+                                        "tantuStarting":"这里开始3",
+                                        "tantuEnding":"这里结束3"
+                                   },{
+                                        "parentNode":'玉环市',
+                                        "id":"ycjd_tc_4",
+                                        "tantuTitle":"玉城太平塘4",
+                                        "tantuAntherName":"小宇宙",
+                                        "suoshudanwei":"仓兴村",
+                                        "tanTuZhang":"韩益辉",
+                                        "tanTuCode":"1",
+                                        "tantuGrade":"5",
+                                        "tantuStarting":"这里开始4",
+                                        "tantuEnding":"这里结束4"
+                                   },
+                               ],
+                               nodes:[
+                                    {
+                                        text: '自定义道哈',
+                                        icon: 'glyphicon glyphicon-map-marker', 
+                                        tags:['自定义道哈'],
+                                        nodes:[
+                                            {
+                                                text: '自定义道哈',
+                                                icon: 'glyphicon glyphicon-map-marker', 
+                                                tags:['自定义'],
+                                                nodes:[
+                                                    {
+                                                        text: '自定义道哈',
+                                                        icon: 'glyphicon glyphicon-map-marker', 
+                                                        tags:['自定义'],   
+                                                    }
+                                                ]   
+                                            }
+                                        ]
+                                    }
+                               ]
+                            }, {
+                                text: '芦蒲镇',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                tags: ['乡镇'],
+                                "suoshucity":'浙江省玉环市',
+                                tantuzhang:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tcz_1",
+                                         "userName":"芦蒲镇-张三",
+                                         "tel":"15967114897",
+                                         "post":"副书记",
+                                         "preTanTuZ":"张三father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"有效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tcz_2",
+                                         "userName":"芦蒲镇-李四",
+                                         "tel":"15967114897",
+                                         "post":"书记",
+                                         "preTanTuZ":"李四father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tcz_3",
+                                         "userName":"芦蒲镇-王五",
+                                         "tel":"15967114897",
+                                         "post":"书记3",
+                                         "preTanTuZ":"王五father",
+                                         "userType":"镇级滩涂长",
+                                         "valid":"无效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tcz_4",
+                                         "userName":"芦蒲镇-周六",
+                                         "tel":"15967114897",
+                                         "post":"书记4",
+                                         "preTanTuZ":"周六father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tcz_5",
+                                         "userName":"芦蒲镇-刘七",
+                                         "tel":"15967114897",
+                                         "post":"书记5",
+                                         "preTanTuZ":"刘七father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    }
+
+                                ],
+                                tantu:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tc_1",
+                                         "tantuTitle":"芦蒲镇-太平塘",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始1",
+                                         "tantuEnding":"这里结束1"
+                                    },{
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tc_2",
+                                         "tantuTitle":"芦蒲镇太平塘2",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始2",
+                                         "tantuEnding":"这里结束2"
+                                    },{
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tc_3",
+                                         "tantuTitle":"芦蒲镇太平塘3",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始3",
+                                         "tantuEnding":"这里结束3"
+                                    },{
+                                         "parentNode":'玉环市',
+                                         "id":"lp_tc_4",
+                                         "tantuTitle":"芦蒲镇太平塘4",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始4",
+                                         "tantuEnding":"这里结束4"
+                                    },
+                                ]
+
+                            }, {
+                                text: '玉环开发区',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                tags: ['开发区'],
+                                "suoshucity":'浙江省玉环市',
+                                 tantuzhang:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"kfq_tcz_1",
+                                         "userName":"开发区-张三",
+                                         "tel":"15967114897",
+                                         "post":"副书记",
+                                         "preTanTuZ":"张三father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"有效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"kfq_tcz_2",
+                                         "userName":"开发区-李四",
+                                         "tel":"15967114897",
+                                         "post":"书记",
+                                         "preTanTuZ":"李四father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"kfq_tcz_3",
+                                         "userName":"开发区-王五",
+                                         "tel":"15967114897",
+                                         "post":"书记3",
+                                         "preTanTuZ":"王五father",
+                                         "userType":"镇级滩涂长",
+                                         "valid":"无效"
+                                    }
+                                ],
+                                tantu:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"kfq_tc_1",
+                                         "tantuTitle":"开发区-太平塘",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始1",
+                                         "tantuEnding":"这里结束1"
+                                    },{
+                                         "parentNode":'玉环市',
+                                         "id":"kfq_tc_2",
+                                         "tantuTitle":"开发区太平塘2",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始2",
+                                         "tantuEnding":"这里结束2"
+                                    }
+                                ]
+
+                            }, {
+                                text: '大麦屿街道',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                tags: ['街道'],
+                                "suoshucity":'浙江省玉环市',
+                                 tantuzhang:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"dmy_tcz_1",
+                                         "userName":"大麦屿街道-张三",
+                                         "tel":"15967114897",
+                                         "post":"副书记",
+                                         "preTanTuZ":"张三father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"有效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"dmy_tcz_2",
+                                         "userName":"大麦屿街道-李四",
+                                         "tel":"15967114897",
+                                         "post":"书记",
+                                         "preTanTuZ":"李四father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    }
+                                ],
+                                tantu:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"dmy_tc_1",
+                                         "tantuTitle":"大麦屿街道-太平塘",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始1",
+                                         "tantuEnding":"这里结束1"
+                                    },{
+                                         "parentNode":'玉环市',
+                                         "id":"dmy_tc_2",
+                                         "tantuTitle":"大麦屿街道太平塘2",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始2",
+                                         "tantuEnding":"这里结束2"
+                                    }
+                                ]
+
+                            }, {
+                                text: '清港镇',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                tags: ['乡镇'],
+                                "suoshucity":'浙江省玉环市',
+                                 tantuzhang:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"qgz_tcz_1",
+                                         "userName":"清港镇-张三",
+                                         "tel":"15967114897",
+                                         "post":"副书记",
+                                         "preTanTuZ":"张三father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"有效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"qgz_tcz_2",
+                                         "userName":"清港镇-李四",
+                                         "tel":"15967114897",
+                                         "post":"书记",
+                                         "preTanTuZ":"李四father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"qgz_tcz_3",
+                                         "userName":"清港镇-王五",
+                                         "tel":"15967114897",
+                                         "post":"书记3",
+                                         "preTanTuZ":"王五father",
+                                         "userType":"镇级滩涂长",
+                                         "valid":"无效"
+                                    }
+                                ],
+                                tantu:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"qgz_tc_1",
+                                         "tantuTitle":"清港镇-太平塘",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始1",
+                                         "tantuEnding":"这里结束1"
+                                    }
+                                ]
+                            }, {
+                                text: '坎门街道',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                tags: ['乡镇'],
+                                "suoshucity":'浙江省玉环市',
+                                 tantuzhang:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"km_tcz_1",
+                                         "userName":"坎门街道-张三",
+                                         "tel":"15967114897",
+                                         "post":"副书记",
+                                         "preTanTuZ":"张三father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"有效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"km_tcz_2",
+                                         "userName":"坎门街道-李四",
+                                         "tel":"15967114897",
+                                         "post":"书记",
+                                         "preTanTuZ":"李四father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    }
+                                ],
+                                tantu:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"km_tc_1",
+                                         "tantuTitle":"坎门街道-太平塘",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始1",
+                                         "tantuEnding":"这里结束1"
+                                    }
+                                ]
+                            },
+                            {
+                                text: '干江镇',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                tags: ['乡镇'],
+                                "suoshucity":'浙江省玉环市',
+                                 tantuzhang:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"gj_tcz_1",
+                                         "userName":"干江镇-张三",
+                                         "tel":"15967114897",
+                                         "post":"副书记",
+                                         "preTanTuZ":"张三father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"有效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"gj_tcz_2",
+                                         "userName":"干江镇-李四",
+                                         "tel":"15967114897",
+                                         "post":"书记",
+                                         "preTanTuZ":"李四father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    },
+                                    {
+                                         "parentNode":'玉环市',
+                                         "id":"gj_tcz_3",
+                                         "userName":"干江镇-王五",
+                                         "tel":"15967114897",
+                                         "post":"书记3",
+                                         "preTanTuZ":"王五father",
+                                         "userType":"镇级滩涂长",
+                                         "valid":"无效"
+                                    }
+                                ],
+                                tantu:[
+                                     {
+                                         "parentNode":'玉环市',
+                                         "id":"gj_tc_1",
+                                         "tantuTitle":"干江镇-太平塘",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始1",
+                                         "tantuEnding":"这里结束1"
+                                    },{
+                                         "parentNode":'玉环市',
+                                         "id":"gj_tc_2",
+                                         "tantuTitle":"干江镇太平塘2",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始2",
+                                         "tantuEnding":"这里结束2"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: '台州市',
+                        tags:[2],
+                        "suoshucity":'浙江省',
+                        nodes:[
+                            {
+                                text: '台州街道',
+                                href: '#grandchild1',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                "suoshucity":'浙江省台州市',
+                                tags: ['街道'],
+                                 tantuzhang:[
+                                     {
+                                         "parentNode":'台州市',
+                                         "id":"tzjd_tcz_1",
+                                         "userName":"台州街道-张三",
+                                         "tel":"15967114897",
+                                         "post":"副书记",
+                                         "preTanTuZ":"张三father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"有效"
+                                    },
+                                    {
+                                         "parentNode":'台州市',
+                                         "id":"tzjd_tcz_2",
+                                         "userName":"台州街道-李四",
+                                         "tel":"15967114897",
+                                         "post":"书记",
+                                         "preTanTuZ":"李四father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    },
+                                    {
+                                         "parentNode":'台州市',
+                                         "id":"tzjd_tcz_3",
+                                         "userName":"台州街道-王五",
+                                         "tel":"15967114897",
+                                         "post":"书记3",
+                                         "preTanTuZ":"王五father",
+                                         "userType":"镇级滩涂长",
+                                         "valid":"无效"
+                                    }
+                                ],
+                                tantu:[
+                                     {
+                                         "parentNode":'台州市',
+                                         "id":"tzjd_tc_1",
+                                         "tantuTitle":"台州街道-太平塘",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始1",
+                                         "tantuEnding":"这里结束1"
+                                    },{
+                                         "parentNode":'台州市',
+                                         "id":"tzjd_tc_2",
+                                         "tantuTitle":"台州街道太平塘2",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始2",
+                                         "tantuEnding":"这里结束2"
+                                    }
+                                ]
+                            },
+                            {
+                                text: '台州开发区阿发发斯蒂芬',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                tags: ['开发区'],
+                                "suoshucity":'浙江省台州市',
+                                 tantuzhang:[
+                                     {
+                                         "parentNode":'台州市',
+                                         "id":"tzkfq_tcz_1",
+                                         "userName":"开发区-张三",
+                                         "tel":"15967114897",
+                                         "post":"副书记",
+                                         "preTanTuZ":"张三father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"有效"
+                                    },
+                                    {
+                                         "parentNode":'台州市',
+                                         "id":"tzkfq_tcz_2",
+                                         "userName":"开发区-李四",
+                                         "tel":"15967114897",
+                                         "post":"书记",
+                                         "preTanTuZ":"李四father",
+                                         "userType":"市级滩涂长",
+                                         "valid":"无效"
+                                    },
+                                    {
+                                         "parentNode":'台州市',
+                                         "id":"tzkfq_tcz_3",
+                                         "userName":"开发区-王五",
+                                         "tel":"15967114897",
+                                         "post":"书记3",
+                                         "preTanTuZ":"王五father",
+                                         "userType":"镇级滩涂长",
+                                         "valid":"无效"
+                                    }
+                                ],
+                                tantu:[
+                                     {
+                                         "parentNode":'台州市',
+                                         "id":"tzkfq_tc_1",
+                                         "tantuTitle":"开发区-太平塘",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始1",
+                                         "tantuEnding":"这里结束1"
+                                    },{
+                                         "parentNode":'台州市',
+                                         "id":"tzkfq_tc_2",
+                                         "tantuTitle":"开发区太平塘2",
+                                         "tantuAntherName":"小宇宙",
+                                         "suoshudanwei":"仓兴村",
+                                         "tanTuZhang":"韩益辉",
+                                         "tanTuCode":"1",
+                                         "tantuGrade":"5",
+                                         "tantuStarting":"这里开始2",
+                                         "tantuEnding":"这里结束2"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                text: '广东省'
+            },
+            {
+                text: '内蒙古自治区'
+            },
+            {
+                text: '辽宁省'
+            },
+            {
+                text: '河北省'
+            }
+        ];
+        //TODO: 初始化.text-div2 的偏移量
+        function resizeOffsetW(){
+            setTimeout(function(){
+                var offsetW=$(".text-div").width()+"px";
+               $(".text-div2").css("left",offsetW);
+            },50);
+        }
+        resizeOffsetW();
+        //TODO: 初始化树形插件
+        $('#showView').treeview({
+            color: "#428bca",
+            nodeIcon: "glyphicon glyphicon-globe",
+            showTags: true,
+            data: defaultData,
+            onNodeSelected: function (event, node) {
+                if(node){
+                   var clickTarget=node.text;
+                   var ttz_data=node.tantuzhang;
+                   var tt_data=node.tantu;
+                   var suoshuCity=node.suoshucity+node.text;
+                   var initShowData= getTT(ttz_data,tt_data,suoshuCity);
+                   render("#tanTuZhang-template","#tmp_TTZ",ttz_data);
+                   render("#tanTu-template","#tmp_TT",tt_data);
+                   render("#tanTuNameOrTitle-template","#myTabContent2",initShowData);
+                }
+            },
+            onNodeExpanded: function(event, node) {
+                 resizeOffsetW();
+            },
+            onNodeCollapsed:function(event,node){
+               resizeOffsetW(); 
+            }
+
+        });
+        //TODO: 去循环拿到滩涂长和滩涂的唯一名称
+        function getTT(dataTTZ,dataTU,city){
+            var arrTanTuZhang=[];
+            var arrTanTu=[];
+            if(dataTTZ&&dataTTZ.length>=1){
+               dataTTZ.forEach(function(v,i){
+                   for(var item in v){
+                      if(item=="userName"){
+                          arrTanTuZhang.push(v.userName);
+                          continue;
+                      }
+                   }  
+               });  
+            }
+
+            if(dataTU&&dataTU.length>=1){
+               dataTU.forEach(function(v,i){
+                   for(var item in v){
+                      if(item=="tantuTitle"){
+                          arrTanTu.push(v.tantuTitle);
+                          continue;
+                      }
+                   }   
+               });  
+            }
+            return {
+                   arrTanTuZhang:arrTanTuZhang,
+                   arrTanTu:arrTanTu,
+                   city:city
+               }; 
+        }
+        
+
+         
+        
+       
+        
+        function resizeH(){
+            var popHeight=$(window).height()-21 +"px";
+            var autoHeight=$(window).height()-260 +"px";
+            $(".text-div2").css({"left":"0"});
+            $(".showDeatailTab").animate({"right":0,"width":"100%","minHeight":popHeight,"opacity":1},500);
+            $(".text-div").animate({"left":"-100%"},800);
+            $(".panelAuto").height(autoHeight);
+
+             /*$(window).resize(function(){
+                    var popHeight=$(window).height()-21 +"px";
+                     var autoHeight=$(window).height()-260 +"px";
+                    
+                      $(".showDeatailTab").animate({"minHeight":popHeight},0);
+                     
+                      $(".panelAuto").height(autoHeight);
+                   
+                });*/
+        }
+        $(".dataTables-example").on("click",".look",function(e){
+            e.preventDefault();
+            resizeH();
+        })
+
+
+       
+        //TODO:点击设置的图标 收起展示页
+        $(".showDeatailTab").on("click",".setting-icon",function(e){
+             $(".showDeatailTab").animate({"right":"-120%"},500);
+             //$(".text-div2").css("opacity","0");
+             $(".text-div").animate({"left":"0"},800,function(){
+                var _left=$(this).width();
+                    $(".text-div2").animate({"left":_left},200); 
+             });
+
+        })
+        //TODO:点击切换地区的按钮 切换至展示页
+         $(".showDeatailTab").on("click","#changeCity",function(e){
+            $(".setting-icon").hide();
+             $(".layout-zz").show();
+             //$(".swipe-icon").html("<i class='glyphicon glyphicon-remove'></i>")
+             $(".text-div").animate({"left":"0","top":"52px","zIndex":1000,"background":"#fff"},800,function(){
+               $("#selCity").show();
+             });
+
+        })
+         //TODO:点击选中地区的按钮 切换至对应的tab页面
+         $("#selCity").on("click",function(){
+            $(".text-div").animate({"left":"-100%","top":0},800);
+             $(".text-div2").css({"left":"0"});
+               $(".layout-zz,#selCity").hide();
+               $(".setting-icon").show();
+         })
+
+
+
+         
+        function reg() {
+            var icon = ["glyphicon-user", "glyphicon-eye-open", "glyphicon-envelope", "glyphicon-phone", "glyphicon-tags", "glyphicon-th-list"];
+            $(".search-if span.glyphicon").each(function (i, v) {
+                var regText = $(v).parents(".form-group").find("label").text().trim().replace(/\s/g, ""),
+                    regName = /用户名|用户|姓名|名字|账户|户主|昵称/ig,
+                    regPwd = /密码|确认密码/ig,
+                    regEmail = /邮箱|信箱|电子邮箱/ig,
+                    regTel = /电话|手机|联系方式/ig,
+                    regID = /身份证|身份证号|身份证号码/ig,
+                    regResultName = regText.match(regName),
+                    regResultPwd = regText.match(regPwd),
+                    regResultEmai = regText.match(regEmail),
+                    regResultTel = regText.match(regTel),
+                    regResultID = regText.match(regID);
+                if (regResultName != null) {
+                    $(this).addClass(icon[0]);
+                } else if (regResultPwd != null) {
+                    $(this).addClass(icon[1]);
+                } else if (regResultEmai != null) {
+                    $(this).addClass(icon[2]);
+                } else if (regResultTel != null) {
+                    $(this).addClass(icon[3]);
+                } else if (regResultID != null) {
+                    $(this).addClass(icon[4]);
+                } else {
+                    $(this).addClass(icon[5]);
+                }
+            });
+        }
+       
+        reg();
+        //参数{input类名，选择类型(单选or多选)}
+
+        $(".rdolist").labelauty("rdolist", "rdo");
+
+        $(".chklist").labelauty("chklist", "check");
+
+        $('.selectpicker').selectpicker({
+            'selectedText': 'cat'
+        });
+
+        $("#form2").easyform();
+        $('.componentForm').on('hide.bs.collapse', function () {
+            $("[id^='easytip-div-main-']").hide();
+        });
+        $(".btn-success").on("click",function(){
+            console.log($("#form2").serialize())
+        });
+    })(window, document,jQuery);
+
+
+</script>
+
+</body>
+</html>

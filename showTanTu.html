@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>滩涂展示</title>
+    <meta name="keywords" content="艋顺,艋顺科技，艋顺科技公司">
+    <meta name="description" content="艋顺,艋顺科技，艋顺科技公司">
+    <link rel="shortcut icon" href="logo.ico" type="images/x-icon"/>
+    <link rel="icon" href="logo.ico" type="images/x-icon"/>
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="animated fadeInRight" style="padding-top:20px;">
+    <div id="wavybg-wrapper" style="width:100%; height:200px; position: relative;margin-bottom: 30px;">
+        <h1 style="position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);color:#fff;">自己瞎玩玩</h1>
+        <canvas>Your browser does not support HTML5 canvas.</canvas>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        市县村级滩涂查询
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div style="padding:0 15px;padding-bottom: 15px;">
+                                <div class="form-group">
+                                    <label for="input-search" class="sr-only"></label>
+                                    <input type="text" class="form-control" id="input-search" placeholder="输入查询地址"
+                                           value="">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="checkbox" id="chk-ignore-case" value="false">
+                                        忽略关键字
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="checkbox" id="chk-exact-match" value="false">
+                                        精准匹配
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="checkbox" id="chk-reveal-results" value="false">
+                                        显示结果(可以直接展开)
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <button type="button" class="btn btn-success btn-block" id="btn-search">搜索
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="button" class="btn btn-default btn-block" id="btn-clear-search">
+                                            清空
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="search-output" class="alert alert-success"
+                                     style="margin:10px 0;display: none;"></div>
+                            </div>
+                        </div>
+                        <div id="showView"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="panel panel-success">
+                    <div class="panel-heading">操作条</div>
+                    <div class="panel-body">
+                        <form action="">
+                            <div class="row search-if" style="margin-left: 0;margin-right:0;">
+                                <div class="panel-group">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title" data-toggle="collapse" data-target="#cxtj1">
+                                                <a role="button">
+                                                    查 询 条 件
+                                                </a>
+                                                <i class="glyphicon glyphicon-chevron-down pull-right"></i>
+                                            </h4>
+                                        </div>
+                                        <div id="cxtj1" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                <div class="row user_div">
+                                                    <div class="col-sm-3">
+                                                        <label for="name1">输入用户名:</label>
+                                                        <input type="text" class="form-control" id="name1"
+                                                               placeholder="请输入搜索条件">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="name1">输入用户名:</label>
+                                                        <input type="text" class="form-control" id="name2"
+                                                               placeholder="请输入搜索条件">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="name1">输入用户名:</label>
+                                                        <input type="text" class="form-control" id="name3"
+                                                               placeholder="请输入搜索条件">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label for="name1">输入用户名:</label>
+                                                        <input type="text" class="form-control" id="name4"
+                                                               placeholder="请输入搜索条件">
+                                                    </div>
+                                                    <!--<div class="col-md-3 col-sm-3">
+                                                        <label for="name1">输入用户名:</label>
+                                                        <input type="text" class="form-control" id="name2"
+                                                               placeholder="请输入搜索条件">
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3">
+                                                        <label for="name1">输入用户名:</label>
+                                                        <input type="text" class="form-control" id="name3"
+                                                               placeholder="请输入搜索条件">
+                                                    </div>-->
+                                                    <!-- <div class="col-md-6 col-sm-6">
+                                                         <label for="name1">输入用户名:</label>
+                                                         <input type="text" class="form-control" id="name4" placeholder="请输入搜索条件">-
+                                                         <input type="text" class="form-control" id="name6" placeholder="请输入搜索条件">
+                                                     </div>-->
+                                                    <div class="col-sm-3 pull-right" style="margin-top:22px;">
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-xs-6">
+                                                                <button class="btn btn-info btn-block">搜索</button>
+                                                            </div>
+                                                            <div class="col-sm-6 col-xs-6">
+                                                                <button class="btn btn-primary btn-block">重置
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-danger batch btn-block" style="margin-bottom:4px;">
+                                            <span class="fa fa-edit"></span>
+                                            批量删除
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-warning btn-block" >
+                                            <span class="fa fa-plus"></span>
+                                            添加用户
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="Plugin/waterpipe.js"></script>
+<script src="js/bootstrap-treeview.min.js"></script>
+<!-- 滩涂长模板 -->
+<script type="text/javascript">
+    (function (win, doc, $) {
+        //TODO: 模拟自定义数据
+        var defaultData = [
+            {
+                text: '浙江省',
+                nodes: [
+                    {
+                        text: '台州市',
+                        "suoshucity": '浙江省',
+                        nodes: [
+                            {
+                                text: '玉环市',
+                                icon: 'glyphicon glyphicon-map-marker',
+                                "suoshucity": '浙江省台州市',
+                                nodes:[
+                                    {
+                                        text: '玉城街道',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '仓坑村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市玉城街道'
+                                            },
+                                            {
+                                                text: '采桑村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市玉城街道'
+                                            },
+                                            {
+                                                text: '乌岩村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市玉城街道'
+                                            },
+                                            {
+                                                text: '西滩村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市玉城街道'
+                                            },
+                                            {
+                                                text: '江岩村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市玉城街道'
+                                            },
+                                            {
+                                                text: '小普竹村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市玉城街道'
+                                            },
+                                            {
+                                                text: '外马村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市玉城街道'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: '干江镇',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '下栈头村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '东渔村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '白马岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '干江村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '花明村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '老傲前村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '梅岭村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '上栈头村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '盐盘村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '垟坑村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '垟岭村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '木杓头村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            },
+                                            {
+                                                text: '断岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市干江镇'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: '芦蒲镇',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '大塘村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市芦蒲镇'
+                                            },
+                                            {
+                                                text: '百丈村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市芦蒲镇'
+                                            },
+                                            {
+                                                text: '道头村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市芦蒲镇'
+                                            },
+                                            {
+                                                text: '漩门村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市芦蒲镇'
+                                            },
+                                            {
+                                                text: '尖山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市芦蒲镇'
+                                            },
+                                            {
+                                                text: '金山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市芦蒲镇'
+                                            },
+                                            {
+                                                text: '红山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市芦蒲镇'
+                                            },
+                                            {
+                                                text: '小塘村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市芦蒲镇'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: '玉环经济开发区',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市'
+                                    },
+                                    {
+                                        text: '大麦屿街道',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '新园村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '陈北村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '陡门头村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '环海村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '龙山社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '普南村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '下青塘村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '鲜迭社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '长山咀村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '杨家村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '双峰社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '岗仔头村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '刘园社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '陈南村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '尤蒙岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '铁龙头社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '新塘村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '小古顺村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '五一村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            },
+                                            {
+                                                text: '小麦屿村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市大麦屿街道'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: '清港镇',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '下湫村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '前路村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '盐业村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '下凡村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '上凡村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '上山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '中赵村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '西林村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '西岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '朱家前村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '芳斗村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '樟岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '王家村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '塘头村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '坦浦村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '凡宏村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '柏台村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '徐都村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '垟根村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '扫帚山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '垟心村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '台山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '双郏塘村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '上湫村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '清港村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '鹤新村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '后排村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '礁西村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '前赵村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '凡海村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            },
+                                            {
+                                                text: '翻身村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市清港镇'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: '坎门街道',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '后沙社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            },
+                                            {
+                                                text: '坎中社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            },
+                                            {
+                                                text: '坎门社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            },
+                                            {
+                                                text: '海城社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            },
+                                            {
+                                                text: '胡沙头社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            },
+                                            {
+                                                text: '红旗社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            },
+                                            {
+                                                text: '水龙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            },
+                                            {
+                                                text: '双龙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            },
+                                            {
+                                                text: '里澳社区',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市坎门街道'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: '鸡山乡',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '火车村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市鸡山乡'
+                                            },
+                                            {
+                                                text: '后岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市鸡山乡'
+                                            },
+                                            {
+                                                text: '北山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市鸡山乡'
+                                            },
+                                            {
+                                                text: '南山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市鸡山乡'
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: '沙门镇',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '灵门村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '日岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '瑶坑村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '双斗村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '小闾村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '里山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '路上村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '大沙湾村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '张岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '南山村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '都墩村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            },
+                                            {
+                                                text: '灯头村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市沙门镇'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: '海山乡',
+                                        icon: 'glyphicon glyphicon-map-marker',
+                                        "suoshucity": '浙江省玉环市',
+                                        nodes:[
+                                            {
+                                                text: '南滩村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市海山乡'
+                                            },
+                                            {
+                                                text: '小青村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市海山乡'
+                                            },
+                                            {
+                                                text: '大岙村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市海山乡'
+                                            },
+                                            {
+                                                text: '虹田村',
+                                                icon: 'glyphicon glyphicon-map-marker',
+                                                "suoshucity": '浙江省台州市海山乡'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+        //TODO: 初始化树形插件
+
+      setTimeout(function(){
+           $('#showView').treeview({
+           color: "#428bca",
+           levels:2,
+//           searchResultBackColor:'#8eb0ce',
+           searchResultColor:'#c70505',
+           data: defaultData,
+           onNodeSelected: function (event, node) {
+               if (node) {
+                   var clickTarget = node.text;
+                   var nodeId=node.nodeId;
+                   var parentArr=$('#showView').treeview('getExpanded',node.nodeId);
+                   var parentCity="";
+                   parentArr.forEach(function(v){
+                       parentCity+=v.text;
+                   });
+                   parentCity+=clickTarget;
+               }
+           },
+           onNodeExpanded: function (event, node) {
+           },
+           onNodeCollapsed: function (event, node) {
+
+           }
+          });
+      },1000);
+
+      var smokyBG = $('#wavybg-wrapper').waterpipe({
+            gradientStart: '#000000',
+            gradientEnd: '#222222',
+            smokeOpacity: 0.1,
+            numCircles: 1,
+            maxMaxRad: 'auto',
+            minMaxRad: 'auto',
+            minRadFactor: 0,
+            iterations: 8,
+            drawsPerFrame: 10,
+            lineWidth: 2,
+            speed: 1,
+            bgColorInner: "#ffffff",
+            bgColorOuter: "#666666"
+        });
+        var $searchableTree = $('#showView').treeview({
+            data: defaultData
+        });
+        var searchCity = function (e) {
+            var pattern = $('#input-search').val();
+            var options = {
+                ignoreCase: $('#chk-ignore-case').is(':checked'),
+                exactMatch: $('#chk-exact-match').is(':checked'),
+                revealResults: $('#chk-reveal-results').is(':checked')
+            };
+            var results = $searchableTree.treeview('search', [pattern, options]);
+            var output = '<p>发现 ' + results.length + ' 项匹配结果</p>';
+            if (pattern == "") {
+                $('#search-output').hide();
+                $('#showView').treeview('collapseAll', { silent: true });
+            } else {
+                $.each(results, function (index, result) {
+                    output += '<p>- ' + result.text + '</p>';
+                });
+                $('#search-output').html(output).show();
+            }
+        };
+        $('#btn-search').on('click', searchCity);
+        $('#input-search').on('keyup', searchCity);
+        $('#btn-clear-search').on('click', function (e) {
+            $searchableTree.treeview('clearSearch');
+            $('#showView').treeview('collapseAll', { silent: true });
+            $('#input-search').val('');
+            $('#search-output').html('').hide();
+        });
+
+
+    })(window, document, jQuery);
+
+
+</script>
+
+</body>
+</html>
